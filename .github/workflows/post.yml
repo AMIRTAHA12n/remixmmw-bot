@@ -1,0 +1,22 @@
+
+name: Post Phonk Songs
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 8,14,20 * * *'
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests
+      - name: Post songs
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          JAMENDO_CLIENT_ID: ${{ secrets.JAMENDO_CLIENT_ID }}
+        run: python bot.py
